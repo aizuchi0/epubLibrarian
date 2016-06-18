@@ -20,6 +20,8 @@ package org.boldlygoingnowhere.ultron;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -36,12 +38,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Metadata;
+import nl.siegmann.epublib.epub.EpubReader;
+import static javafx.application.Application.launch;
 
 public class epubRename extends Application {
 
     ImageView imageView;
     StackPane contentPane;
     BorderPane layout;
+    static final Logger WOODY = Logger.getLogger(epubRename.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -49,7 +56,7 @@ public class epubRename extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Drag and Drop");
+        primaryStage.setTitle("Rename ePubs");
         layout = new BorderPane();
         contentPane = new StackPane();
         Scene scene = new Scene(layout, 400, 400, Color.WHITE);
@@ -85,20 +92,11 @@ public class epubRename extends Application {
         boolean success = false;
         if (db.hasFiles()) {
             success = true;
-            // Only get the first file from the list
-            final File file = db.getFiles().get(0);
+            // Only get the first currentFile from the list
+            final File currentFile = db.getFiles().get(0);
             Platform.runLater(() -> {
-                System.out.println(file.getAbsolutePath());
-                try {
-                    if (!contentPane.getChildren().isEmpty()) {
-                        contentPane.getChildren().remove(0);
-                    }
-                    Image img = new Image(new FileInputStream(file.getAbsolutePath()));
-
-                    addImage(img, contentPane);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(epubRename.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                System.out.println(currentFile.getAbsolutePath());
+                getMetadata(currentFile);
             });
         }
         e.setDropCompleted(success);
@@ -108,9 +106,7 @@ public class epubRename extends Application {
     private void mouseDragOver(final DragEvent e) {
         final Dragboard db = e.getDragboard();
 
-        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith(".png")
-                || db.getFiles().get(0).getName().toLowerCase().endsWith(".jpeg")
-                || db.getFiles().get(0).getName().toLowerCase().endsWith(".jpg");
+        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith(".epub");
 
         if (db.hasFiles()) {
             if (isAccepted) {
@@ -125,4 +121,19 @@ public class epubRename extends Application {
         }
     }
 
+    private Metadata getMetadata(File epubFile) {
+        EpubReader reader = new EpubReader();
+        InputStream epubStream;
+        Book theBook = null;
+        try {
+            epubStream = new FileInputStream(epubFile);
+            theBook = reader.readEpub(epubStream);
+        } catch (FileNotFoundException ex) {
+            WOODY.log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            WOODY.log(Level.SEVERE, null, ex);
+        }
+        assert theBook != null;
+        return theBook.getMetadata();
+    }
 }
