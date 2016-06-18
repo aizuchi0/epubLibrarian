@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.scene.Scene;
@@ -92,12 +91,13 @@ public class epubRename extends Application {
         boolean success = false;
         if (db.hasFiles()) {
             success = true;
-            // Only get the first currentFile from the list
-            final File currentFile = db.getFiles().get(0);
-            Platform.runLater(() -> {
-                System.out.println(currentFile.getAbsolutePath());
-                getMetadata(currentFile);
-            });
+            db.getFiles().forEach(q -> {
+                Platform.runLater(() -> {
+                    System.out.println(q.getAbsolutePath());
+                    getMetadata(q);
+                });
+            }
+            );
         }
         e.setDropCompleted(success);
         e.consume();
