@@ -94,7 +94,10 @@ public class epubRename extends Application {
             db.getFiles().forEach(q -> {
                 Platform.runLater(() -> {
                     System.out.println(q.getAbsolutePath());
-                    getMetadata(q);
+                    Metadata md = getMetadata(q);
+                    q.renameTo(new File(q.getParent() + File.separator +
+                            md.getAuthors().get(0) + " - " +
+                            md.getTitles().get(0) + ".epub"));
                 });
             }
             );
