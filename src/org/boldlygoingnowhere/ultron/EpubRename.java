@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -42,12 +43,12 @@ import nl.siegmann.epublib.domain.Metadata;
 import nl.siegmann.epublib.epub.EpubReader;
 import static javafx.application.Application.launch;
 
-public class epubRename extends Application {
+public class EpubRename extends Application {
 
     ImageView imageView;
     StackPane contentPane;
     BorderPane layout;
-    static final Logger WOODY = Logger.getLogger(epubRename.class.getName());
+    static final Logger WOODY = Logger.getLogger(EpubRename.class.getName());
 
     public static void main(String[] args) {
         launch(args);
@@ -59,6 +60,7 @@ public class epubRename extends Application {
         layout = new BorderPane();
         contentPane = new StackPane();
         Scene scene = new Scene(layout, 400, 400, Color.WHITE);
+        
 
         contentPane.setOnDragOver((Event event) -> {
             mouseDragOver((DragEvent) event);
@@ -93,7 +95,7 @@ public class epubRename extends Application {
             success = true;
             db.getFiles().forEach(q -> {
                 Platform.runLater(() -> {
-                    System.out.println(q.getAbsolutePath());
+                    WOODY.log(Level.FINE, q.getAbsolutePath());
                     Metadata md = getMetadata(q);
                     q.renameTo(new File(q.getParent() + File.separator +
                             md.getAuthors().get(0) + " - " +
@@ -109,7 +111,7 @@ public class epubRename extends Application {
     private void mouseDragOver(final DragEvent e) {
         final Dragboard db = e.getDragboard();
 
-        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith(".epub");
+        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase(Locale.getDefault()).endsWith(".epub");
 
         if (db.hasFiles()) {
             if (isAccepted) {
@@ -126,7 +128,7 @@ public class epubRename extends Application {
 
     private Metadata getMetadata(File epubFile) {
         EpubReader reader = new EpubReader();
-        InputStream epubStream;
+        InputStream epubStream = null;
         Book theBook = null;
         try {
             epubStream = new FileInputStream(epubFile);
@@ -135,6 +137,13 @@ public class epubRename extends Application {
             WOODY.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             WOODY.log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                assert epubStream != null;
+                epubStream.close();
+            } catch (IOException ex) {
+                WOODY.log(Level.SEVERE, null, ex);
+            }
         }
         assert theBook != null;
         return theBook.getMetadata();
