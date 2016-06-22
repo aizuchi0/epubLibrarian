@@ -29,7 +29,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -79,13 +78,6 @@ public class EpubRename extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-    }
-
-    void addImage(Image i, StackPane pane) {
-
-        imageView = new ImageView();
-        imageView.setImage(i);
-        pane.getChildren().add(imageView);
     }
 
     private void mouseDragDropped(final DragEvent e) {
