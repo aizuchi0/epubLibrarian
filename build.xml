@@ -56,7 +56,7 @@
     <target name="-post-jfx-jar">
         <buildnumber/>
         <java classname="edu.uiowa.physics.installer.JumboJar" dir=".">
-            <arg value="${application.major_version}.${application.minor_version}.${build.number}"/>
+            <arg value="${javafx.application.implementation.version}.${build.number}"/>
             <classpath>
                 <pathelement location="dist/lib/JumboJar.jar"/>
                 <pathelement path="${java.class.path}"/>
