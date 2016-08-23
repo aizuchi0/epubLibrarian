@@ -17,127 +17,36 @@
  */
 package org.boldlygoingnowhere.ultron;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Locale;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Metadata;
-import nl.siegmann.epublib.epub.EpubReader;
 import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 public class EpubRename extends Application {
 
-    ImageView imageView;
-    StackPane contentPane;
-    BorderPane layout;
     static final Logger WOODY = Logger.getLogger(EpubRename.class.getName());
+    StackPane contentPane;
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Rename ePubs");
-        layout = new BorderPane();
-        contentPane = new StackPane();
-        Scene scene = new Scene(layout, 400, 400, Color.WHITE);
-        
-
-        contentPane.setOnDragOver((Event event) -> {
-            mouseDragOver((DragEvent) event);
-        });
-
-        contentPane.setOnDragDropped((Event event) -> {
-            mouseDragDropped((DragEvent) event);
-        });
-
-        contentPane.setOnDragExited((Event event) -> {
-            contentPane.setStyle("-fx-border-color: #C6C6C6;");
-        });
-
-        layout.setCenter(contentPane);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }
-
-    private void mouseDragDropped(final DragEvent e) {
-        final Dragboard db = e.getDragboard();
-        boolean success = false;
-        if (db.hasFiles()) {
-            success = true;
-            db.getFiles().forEach(q -> {
-                Platform.runLater(() -> {
-                    WOODY.log(Level.FINE, q.getAbsolutePath());
-                    Metadata md = getMetadata(q);
-                    q.renameTo(new File(q.getParent() + File.separator +
-                            md.getAuthors().get(0) + " - " +
-                            md.getTitles().get(0) + ".epub"));
-                });
-            }
-            );
-        }
-        e.setDropCompleted(success);
-        e.consume();
-    }
-
-    private void mouseDragOver(final DragEvent e) {
-        final Dragboard db = e.getDragboard();
-
-        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase(Locale.getDefault()).endsWith(".epub");
-
-        if (db.hasFiles()) {
-            if (isAccepted) {
-                contentPane.setStyle("-fx-border-color: red;"
-                        + "-fx-border-width: 5;"
-                        + "-fx-background-color: #C6C6C6;"
-                        + "-fx-border-style: solid;");
-                e.acceptTransferModes(TransferMode.COPY);
-            }
-        } else {
-            e.consume();
-        }
-    }
-
-    private Metadata getMetadata(File epubFile) {
-        EpubReader reader = new EpubReader();
-        InputStream epubStream = null;
-        Book theBook = null;
-        try {
-            epubStream = new FileInputStream(epubFile);
-            theBook = reader.readEpub(epubStream);
-        } catch (FileNotFoundException ex) {
-            WOODY.log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            WOODY.log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                assert epubStream != null;
-                epubStream.close();
-            } catch (IOException ex) {
-                WOODY.log(Level.SEVERE, null, ex);
-            }
-        }
-        assert theBook != null;
-        return theBook.getMetadata();
-    }
 }
