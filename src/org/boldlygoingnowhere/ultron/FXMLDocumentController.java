@@ -23,9 +23,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -91,8 +94,17 @@ public class FXMLDocumentController implements Initializable {
             db.getFiles().forEach(q -> {
                 Platform.runLater(() -> {
                     WOODY.log(Level.FINE, q.getAbsolutePath());
+                    Path destination = null;
                     Metadata md = getMetadata(q);
-                    q.renameTo(new File(q.getParent() + File.separator +
+                    try {
+                        destination = Files.createDirectories(new File(System.getProperty("user.home")
+                                + File.separator + "Books" + File.separator
+                                + md.getAuthors().get(0).toString().substring(0, 1).toUpperCase() + File.separator
+                                + md.getAuthors().get(0)).toPath());
+                    } catch (IOException ex) {
+                        WOODY.log(Level.SEVERE, null, ex);
+                    }
+                    q.renameTo(new File(destination + File.separator +
                             md.getAuthors().get(0) + " - " +
                             md.getTitles().get(0) + ".epub"));
                 });
