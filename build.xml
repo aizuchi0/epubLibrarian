@@ -51,7 +51,7 @@
 
     -->
     <property environment="env"/>
-    <property file="src/org/boldlygoingnowhere/ultron/local.properties"/>
+    <property file="src/xyz/aizuchi/local.properties"/>
 
     <target name="-post-jfx-jar">
         <buildnumber/>
