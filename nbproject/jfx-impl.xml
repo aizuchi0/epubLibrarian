@@ -2770,6 +2770,7 @@
             <fx:deploy width="${javafx.width}" height="${javafx.height}"
                       outdir="${jfx.deployment.dir}" embedjnlp="true" updatemode="${update-mode}"
                       outfile="${application.title}" includeDT="${javafx.deploy.includeDT}">
+                <fx:bundleArgument arg="mac.signing-key-user-name" value="20B9279D4D2D869D006FDE0E42FF0DD0B0DABDF9"/>
                 <fx:application refid="fxApp"/>
                 <fx:resources refid="appRes"/>
                 <fx:info title="${application.title}" vendor="${application.vendor}"/>
