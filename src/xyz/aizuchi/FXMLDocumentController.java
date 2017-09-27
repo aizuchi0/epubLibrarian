@@ -97,6 +97,7 @@ public class FXMLDocumentController implements Initializable {
                     Metadata md = getMetadata(q);
                     try {
                         destination = Files.createDirectories(new File(System.getProperty("user.home")
+                                + File.separator + "ownCloud" + File.separator + "home"
                                 + File.separator + "Books" + File.separator
                                 + md.getAuthors().get(0).toString().substring(0, 1).toUpperCase() + File.separator
                                 + md.getAuthors().get(0)).toPath());
