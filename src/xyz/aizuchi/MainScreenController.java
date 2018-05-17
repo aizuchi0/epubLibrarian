@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Daniel Crawford <daniel-crawford@uiowa.edu>
+ * Copyright (C) 2018 Daniel Crawford <daniel-crawford@uiowa.edu>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,7 +34,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Metadata;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -45,10 +45,10 @@ import static xyz.aizuchi.EpubRename.WOODY;
  *
  * @author Daniel Crawford <daniel-crawford@uiowa.edu>
  */
-public class FXMLDocumentController implements Initializable {
+public class MainScreenController implements Initializable {
 
     @FXML
-    private StackPane contentPane;
+    private AnchorPane contentPane;
 
     /**
      * Initializes the controller class.

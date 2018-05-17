@@ -53,7 +53,7 @@
     <property environment="env"/>
     <property file="src/xyz/aizuchi/local.properties"/>
 
-    <target name="-post-jfx-jar">
+<!--    <target name="-post-jfx-jar">
         <buildnumber/>
         <java classname="edu.uiowa.physics.installer.JumboJar" dir=".">
             <arg value="${javafx.application.implementation.version}.${build.number}"/>
@@ -67,6 +67,6 @@
         <delete>
             <fileset dir="." includes="*.jar.sh"/>
         </delete>
-    </target>
+    </target>-->
 
 </project>
