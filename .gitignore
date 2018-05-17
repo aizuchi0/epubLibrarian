@@ -2,3 +2,4 @@
 /build/
 *signed-standalone*
 /build
+/nbproject/private/

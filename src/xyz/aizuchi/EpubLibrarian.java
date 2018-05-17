@@ -26,9 +26,9 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-public class EpubRename extends Application {
+public class EpubLibrarian extends Application {
 
-    static final Logger WOODY = Logger.getLogger(EpubRename.class.getName());
+    static final Logger WOODY = Logger.getLogger(EpubLibrarian.class.getName());
     StackPane contentPane;
 
     @Override

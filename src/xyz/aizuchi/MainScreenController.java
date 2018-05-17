@@ -38,7 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Metadata;
 import nl.siegmann.epublib.epub.EpubReader;
-import static xyz.aizuchi.EpubRename.WOODY;
+import static xyz.aizuchi.EpubLibrarian.WOODY;
 
 /**
  * FXML Controller class
@@ -85,6 +85,11 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
+    private void exitProgram() {
+        Platform.exit();
+    }
+    
+    @FXML
     private void dragDropped(final DragEvent e) {
         final Dragboard db = e.getDragboard();
         boolean success = false;
@@ -123,15 +128,15 @@ public class MainScreenController implements Initializable {
             epubStream = new FileInputStream(epubFile);
             theBook = reader.readEpub(epubStream);
         } catch (FileNotFoundException ex) {
-            EpubRename.WOODY.log(Level.SEVERE, null, ex);
+            EpubLibrarian.WOODY.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            EpubRename.WOODY.log(Level.SEVERE, null, ex);
+            EpubLibrarian.WOODY.log(Level.SEVERE, null, ex);
         } finally {
             try {
                 assert epubStream != null;
                 epubStream.close();
             } catch (IOException ex) {
-                EpubRename.WOODY.log(Level.SEVERE, null, ex);
+                EpubLibrarian.WOODY.log(Level.SEVERE, null, ex);
             }
         }
         assert theBook != null;
