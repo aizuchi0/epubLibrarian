@@ -73,9 +73,7 @@
         </install4j>
     </target>
     <target name="-post-clean">
-        <delete>
-            <fileset dir="packaging" includes="*"/>
-        </delete>
+        <delete dir="packaging" followsymlinks="false" includeemptydirs="true"/>
     </target>
     
 </project>
