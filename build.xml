@@ -67,7 +67,15 @@
             </classpath>
         </java>-->
         <install4j projectfile="epubLibrarian.install4j"
-            release="${javafx.application.implementation.version}.${build.number}"/>
+                   release="${javafx.application.implementation.version}.${build.number}">
+            <variable name="sys.version" value="${javafx.application.implementation.version}.${build.number}"/>
+            <variable name="sys.outputDir" value="packaging/"/>
+        </install4j>
     </target>
-
+    <target name="-post-clean">
+        <delete>
+            <fileset dir="packaging" includes="*"/>
+        </delete>
+    </target>
+    
 </project>
