@@ -3,3 +3,4 @@
 *signed-standalone*
 /build
 /nbproject/private/
+/packaging/*
