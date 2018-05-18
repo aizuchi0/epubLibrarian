@@ -52,21 +52,22 @@
     -->
     <property environment="env"/>
     <property file="src/xyz/aizuchi/local.properties"/>
-
-<!--    <target name="-post-jfx-jar">
+    
+    <taskdef name="install4j"
+             classname="com.install4j.Install4JTask"
+             classpath="/Applications/install4j.app/Contents/Resources/app/bin/ant.jar"/>
+         
+    <target name="-post-jfx-jar">
         <buildnumber/>
-        <java classname="edu.uiowa.physics.installer.JumboJar" dir=".">
+        <!--        <java classname="edu.uiowa.physics.installer.JumboJar" dir=".">
             <arg value="${javafx.application.implementation.version}.${build.number}"/>
             <classpath>
                 <pathelement location="dist/lib/JumboJar.jar"/>
                 <pathelement path="${java.class.path}"/>
             </classpath>
-        </java>
+        </java>-->
+        <install4j projectfile="epubLibrarian.install4j"
+            release="${javafx.application.implementation.version}.${build.number}"/>
     </target>
-    <target name="-post-clean">
-        <delete>
-            <fileset dir="." includes="*.jar.sh"/>
-        </delete>
-    </target>-->
 
 </project>
