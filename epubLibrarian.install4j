@@ -18,8 +18,12 @@
   <files keepModificationTimes="false" missingFilesStrategy="warn" globalExcludeSuffixes="" defaultOverwriteMode="4" defaultUninstallMode="0" launcherOverwriteMode="3" defaultFileMode="644" defaultDirMode="755">
     <filesets />
     <roots />
-    <mountPoints />
-    <entries />
+    <mountPoints>
+      <mountPoint id="208" root="" location="" mode="755" />
+    </mountPoints>
+    <entries>
+      <variableEntry mountPoint="208" file="" overwriteMode="1" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="true" overrideOverwriteMode="true" overrideUninstallMode="true" name="sys.jarSourcePath" separator="${compiler:sys.pathlistSeparator}" />
+    </entries>
     <components />
   </files>
   <launchers>
@@ -33,8 +37,10 @@
           <versionLine x="20" y="40" text="version ${compiler:sys.version}" fontSize="8" fontColor="0,0,0" bold="false" />
         </text>
       </splashScreen>
-      <java mainClass="xyz.aizuchi.EpubLibrarian" mainMode="1" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" bundleRuntime="true">
-        <classPath />
+      <java mainClass="${compiler:sys.mainClass}" mainMode="1" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" bundleRuntime="true">
+        <classPath>
+          <variable name="sys.jarList" separator="${compiler:sys.pathlistSeparator}" useRelativePrefix="false" relativePrefix="" />
+        </classPath>
         <modulePath />
         <nativeLibraryDirectories />
         <vmOptions />

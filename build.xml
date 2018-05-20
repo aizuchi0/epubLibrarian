@@ -57,17 +57,27 @@
              classname="com.install4j.Install4JTask"
              classpath="/Applications/install4j.app/Contents/Resources/app/bin/ant.jar"/>
          
-    <target name="-post-jfx-jar">
+    <target name="-post-jfx-deploy">
         <buildnumber/>
-        <!--        <java classname="edu.uiowa.physics.installer.JumboJar" dir=".">
-            <arg value="${javafx.application.implementation.version}.${build.number}"/>
-            <classpath>
-                <pathelement location="dist/lib/JumboJar.jar"/>
-                <pathelement path="${java.class.path}"/>
-            </classpath>
-        </java>-->
+
+        <fileset id="dist.contents" dir="${dist.dir}" includes="**/*.jar"/>
+        <property name="dist.dir.relative" location="${dist.dir}"/>
+        <pathconvert dirsep="${file.separator}" pathsep="${path.separator}" property="prop.dist.contents" refid="dist.contents">
+            <map from="${dist.dir.relative}" to="dist"/>
+        </pathconvert>
+        <pathconvert dirsep="${file.separator}" pathsep="${path.separator}" property="prop.dist.justjars" refid="dist.contents">
+            <regexpmapper from="^.*/(.*\.jar)$$" to="\1"/>
+        </pathconvert>
+        <echo message="prop.dist.contents = ${prop.dist.contents}"/>
+        <echo message="prop.dist.justjars = ${prop.dist.justjars}"/>
+        
         <install4j projectfile="epubLibrarian.install4j"
+                   destination="packaging/"
+                   verbose="true"
                    release="${javafx.application.implementation.version}.${build.number}">
+            <variable name="sys.jarSourcePath" value="${prop.dist.contents}"/>
+            <variable name="sys.jarList" value="${prop.dist.justjars}"/>
+            <variable name="sys.mainClass" value="${javafx.main.class}"/>
             <variable name="sys.version" value="${javafx.application.implementation.version}.${build.number}"/>
             <variable name="sys.outputDir" value="packaging/"/>
         </install4j>
