@@ -74,12 +74,14 @@
         <install4j projectfile="epubLibrarian.install4j"
                    destination="packaging/"
                    verbose="false"
+                   macKeystorePassword=""
                    release="${javafx.application.implementation.version}.${build.number}">
             <variable name="sys.jarSourcePath" value="${prop.dist.contents}"/>
             <variable name="sys.jarList" value="${prop.dist.justjars}"/>
             <variable name="sys.mainClass" value="${javafx.main.class}"/>
             <variable name="sys.version" value="${javafx.application.implementation.version}.${build.number}"/>
             <variable name="sys.outputDir" value="packaging/"/>
+            <variable name="signkey.mac" value="/Users/dgcrawfo/Documents/Signing keys/Developer ID Application Daniel Crawford KKUXJV9FP5.p12"/>
         </install4j>
     </target>
     <target name="-post-clean">
