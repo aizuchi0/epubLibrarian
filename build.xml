@@ -62,4 +62,40 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <property environment="env"/>
+    
+    <taskdef name="install4j"
+             classname="com.install4j.Install4JTask"
+             classpath="/Applications/install4j.app/Contents/Resources/app/bin/ant.jar"/>
+         
+    <target name="-post-jar">
+        <buildnumber/>
+
+        <fileset id="dist.contents" dir="${dist.dir}" includes="**/*.jar"/>
+        <property name="dist.dir.relative" location="${dist.dir}"/>
+        <pathconvert dirsep="${file.separator}" pathsep="${path.separator}" property="prop.dist.contents" refid="dist.contents">
+            <map from="${dist.dir.relative}" to="dist"/>
+        </pathconvert>
+        <pathconvert dirsep="${file.separator}" pathsep="${path.separator}" property="prop.dist.justjars" refid="dist.contents">
+            <regexpmapper from="^.*/(.*\.jar)$$" to="\1"/>
+        </pathconvert>
+<!--        <echo message="prop.dist.contents = ${prop.dist.contents}"/>
+        <echo message="prop.dist.justjars = ${prop.dist.justjars}"/>-->
+        
+        <install4j projectfile="epubLibrarian.install4j"
+                   destination="packaging/"
+                   verbose="false"
+                   macKeystorePassword=""
+                   release="${javafx.application.implementation.version}.${build.number}">
+            <variable name="sys.jarSourcePath" value="${prop.dist.contents}"/>
+            <variable name="sys.jarList" value="${prop.dist.justjars}"/>
+            <variable name="sys.mainClass" value="${javafx.main.class}"/>
+            <variable name="sys.version" value="${javafx.application.implementation.version}.${build.number}"/>
+            <variable name="sys.outputDir" value="packaging/"/>
+            <variable name="signkey.mac" value="/Users/dgcrawfo/Documents/Signing keys/Developer ID Application Daniel Crawford KKUXJV9FP5.p12"/>
+        </install4j>
+    </target>
+    <target name="-post-clean">
+        <delete dir="packaging" followsymlinks="false" includeemptydirs="true"/>
+    </target>
 </project>

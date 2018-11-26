@@ -5,6 +5,7 @@
  */
 module epubLibrarian {
     requires java.logging;
+    requires org.slf4j;
     requires epublib.core;
     requires javafx.base;
     requires javafx.controls;
