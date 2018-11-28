@@ -43,8 +43,11 @@
       <java mainClass="${compiler:sys.mainClass}" mainMode="1" vmParameters="" arguments="" allowVMPassthroughParameters="true" preferredVM="" bundleRuntime="true">
         <classPath>
           <variable name="sys.jarList" separator="${compiler:sys.pathlistSeparator}" useRelativePrefix="false" relativePrefix="" />
+          <variable name="sys.javac.modulepath" separator="${compiler:sys.javac.modulepath}" useRelativePrefix="false" relativePrefix="" />
         </classPath>
-        <modulePath />
+        <modulePath>
+          <variable name="sys.javac.modulepath" separator="${compiler:sys.javac.modulepath}" useRelativePrefix="false" relativePrefix="" />
+        </modulePath>
         <nativeLibraryDirectories />
         <vmOptions />
       </java>
