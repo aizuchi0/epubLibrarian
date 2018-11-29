@@ -64,11 +64,11 @@
     -->
     <property environment="env"/>
     
-<!--    <taskdef name="install4j"
-             classname="com.install4j.Install4JTask"
-             classpath="/Applications/install4j.app/Contents/Resources/app/bin/ant.jar"/>-->
+    <!--    <taskdef name="install4j"
+    classname="com.install4j.Install4JTask"
+    classpath="/Applications/install4j.app/Contents/Resources/app/bin/ant.jar"/>-->
          
-<!--    <target name="-post-jar">
+    <!--    <target name="-post-jar">
         <buildnumber/>
 
         <fileset id="dist.contents" dir="${dist.dir}" includes="**/*.jar"/>
