@@ -4,3 +4,7 @@
 /build
 /nbproject/private/
 /packaging/*
+/dmg_osx.sh
+/*.tgz
+/*.dmg
+/*.sh
