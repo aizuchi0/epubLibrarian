@@ -12,7 +12,7 @@
     <property name="application.icon.file"
                value="epubLibrarian.icns"/>
     <import>
-        <url url="file:///Users/dgcrawfo/src/ant_build_scripts/scriptBuilder.xml"/>
+        <url url="https://git.uiowa.edu/dgcrawfo/ant_build_scripts/raw/master/scriptBuilder.xml"/>
     </import>
     <import file="nbproject/build-impl.xml"/>
     <!--
