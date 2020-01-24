@@ -25,7 +25,7 @@ pipeline {
             }
             steps {
                 script {
-                    git 'git@git.physics.uiowa.edu:dgcrawfo/epublibrarian.git'
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_physics', url: 'git@git.physics.uiowa.edu:dgcrawfo/epublibrarian.git']]])
                     sh script: '''#!/bin/bash --login
 export JAVA_HOME=`java -XshowSettings:properties -version 2>&1| grep java.home | cut -f 7 -d ' '`
 env | sort
