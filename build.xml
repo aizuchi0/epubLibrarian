@@ -12,7 +12,7 @@
     <property name="application.icon.file"
                value="epubLibrarian.icns"/>
     <import>
-        <url url="file:///Users/dgcrawfo/NetbeansProjects/scriptBuilder.xml"/>
+        <url url="https://git.physics.uiowa.edu/snippets/2/raw"/>
     </import>
     <import file="nbproject/build-impl.xml"/>
     <!--
