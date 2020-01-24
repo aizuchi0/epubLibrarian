@@ -29,7 +29,7 @@ pipeline {
                     sh script: '''#!/bin/bash --login
 export JAVA_HOME=`java -XshowSettings:properties -version 2>&1| grep java.home | cut -f 7 -d ' '`
 env | sort
-ant -Dplatforms.JDK_13.home=$JAVA_HOME -Ddo.jlink.internal=true clean jar
+ant -Ddo.jlink.internal=true clean jar
 '''
                 }
             }
