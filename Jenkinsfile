@@ -6,10 +6,6 @@ pipeline {
 //        A_URL = 'http://autoplot.org/jnlp/devel/autoplot.jar'
 //        REV_DNS = 'org.autoplot'
 //    }
-    tools {
-        ant 'Homebrew_ant'
-        jdk 'OSX_JDK_13'
-    }
     stages {
         stage('Clean Workspace') {
             agent {
@@ -20,6 +16,10 @@ pipeline {
             }
         }
         stage('Build app with ant') {
+            tools {
+                ant 'Homebrew_ant'
+                jdk 'OSX_JDK_latest'
+            }
             agent {
                 label 'OSX'
             }
