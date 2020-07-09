@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,7 +38,7 @@ import nl.siegmann.epublib.epub.EpubReader;
  */
 public class App extends Application {
 
-    AnchorPane ap;
+    static AnchorPane ap;
     Metadata md;
 
     @Override
@@ -60,12 +61,15 @@ public class App extends Application {
         fileMenu.getItems().add(destDir);
         fileMenu.getItems().add(new SeparatorMenuItem());
         fileMenu.getItems().add(quitItem);
+        quitItem.setOnAction(new ExitAction());
         mb.getMenus().add(fileMenu);
         ap = new AnchorPane(label);
         AnchorPane.setLeftAnchor(ap, 163.0);
         AnchorPane.setRightAnchor(ap, 97.0);
         ap.setId("contentPane");
         ap.setOnDragDropped(new dragDropped());
+        ap.setOnDragOver(new dragOver());
+        ap.setOnDragExited(new dragExited());
         VBox vBox = new VBox(mb, ap);
         Scene scene = new Scene(vBox, 640, 400);
         stage.setScene(scene);
@@ -99,36 +103,51 @@ public class App extends Application {
         return theBook.getMetadata();
     }
 
-    private void dragExited(DragEvent event) {
-        ap.setStyle("-fx-border-color: #C6C6C6;");
-    }
+    private static class dragOver implements EventHandler<DragEvent> {
 
-    private void dragOver(final DragEvent e) {
-        final Dragboard db = e.getDragboard();
+        public dragOver() {
+        }
 
-        final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase(Locale.getDefault()).endsWith(".epub");
+        @Override
+        public void handle(DragEvent e) {
+            final Dragboard db = e.getDragboard();
 
-        if (db.hasFiles()) {
-            if (isAccepted) {
-                ap.setStyle("-fx-border-color: red;"
-                        + "-fx-border-width: 5;"
-                        + "-fx-background-color: #C6C6C6;"
-                        + "-fx-border-style: solid;");
-                e.acceptTransferModes(TransferMode.COPY);
+            final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase(Locale.getDefault()).endsWith(".epub");
+
+            if (db.hasFiles()) {
+                if (isAccepted) {
+                    ap.setStyle("-fx-border-color: red;"
+                            + "-fx-border-width: 5;"
+                            + "-fx-background-color: #C6C6C6;"
+                            + "-fx-border-style: solid;");
+                    e.acceptTransferModes(TransferMode.COPY);
+                }
+            } else {
+                e.consume();
             }
-        } else {
-            e.consume();
         }
     }
 
-    private void exitProgram() {
-        Platform.exit();
+    private static class dragExited implements EventHandler<DragEvent> {
+
+        public dragExited() {
+        }
+
+        @Override
+        public void handle(DragEvent e) {
+            ap.setStyle("-fx-border-color: #C6C6C6;");
+        }
     }
 
-    private EventHandler<DragEvent> dragDropped() {
+    private static class ExitAction implements EventHandler<ActionEvent> {
 
-        final DragEvent e;
-        return null;
+        public ExitAction() {
+        }
+
+        @Override
+        public void handle(ActionEvent t) {
+            Platform.exit();
+        }
     }
 
     private class dragDropped implements EventHandler<DragEvent> {
