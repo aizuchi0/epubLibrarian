@@ -168,7 +168,8 @@ public class App extends Application {
                         md = getMetadata(q);
                         try {
                             destination = Files.createDirectories(new File(System.getProperty("user.home")
-                                    + File.separator + "Nextcloud" + File.separator + "ultron"
+                                    + File.separator + "Library" + File.separator + "Mobile Documents"
+                                    + File.separator + "com~apple~CloudDocs"
                                     + File.separator + "Books" + File.separator
                                     + md.getAuthors().get(0).toString().substring(0, 1).toUpperCase() + File.separator
                                     + md.getAuthors().get(0)).toPath());
