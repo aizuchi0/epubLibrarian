@@ -10,7 +10,7 @@
                 <goal>javafx:run</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath ${packageClassName}</exec.args>
+                <exec.args>-classpath %classpath xyz.aizuchi.epublibrarian.App</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -22,23 +22,6 @@
                 <goal>javafx:run</goal>
             </goals>
         </action>
-        <action>
-            <actionName>CUSTOM-jlink</actionName>
-            <displayName>jlink</displayName>
-            <goals>
-                <goal>clean</goal>
-                <goal>install</goal>
-                <goal>javafx:jlink</goal>
-                
-            </goals>
-        </action>
-        <action>
-            <actionName>CUSTOM-jlink2</actionName>
-            <displayName>jlink2</displayName>
-            <goals>
-                <goal>clean</goal>
-                <goal>package</goal>
-                
-            </goals>
-        </action>
+        
+        
     </actions>

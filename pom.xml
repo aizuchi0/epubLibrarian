@@ -6,8 +6,8 @@
     <version>2.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -20,6 +20,17 @@
             <artifactId>epublib.core</artifactId>
             <version>1.0</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta4</version>
         </dependency>
     </dependencies>
     <build>
@@ -39,14 +50,6 @@
                 <configuration>
                     <mainClass>xyz.aizuchi.epublibrarian.App</mainClass>
                     <launcher>epubLibrarian</launcher>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jlink-plugin</artifactId>
-                <version>3.0.0-alpha-1</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <!-- configuration elements goes here -->
                 </configuration>
             </plugin>
         </plugins>
